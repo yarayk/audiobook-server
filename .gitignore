@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+audiobooks/
+tmp/
+voices/
+models/
+
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,45 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./ebooks:/app/ebooks
+      - ./audiobooks:/app/audiobooks
+      - ./models:/app/models
+      - ./voices:/app/voices
+      - ./tmp:/app/tmp
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: python -m app.worker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./ebooks:/app/ebooks
+      - ./audiobooks:/app/audiobooks
+      - ./models:/app/models
+      - ./voices:/app/voices
+      - ./tmp:/app/tmp
+    environment:
+      - REDIS_HOST=redis
+      - HOST_PROJECT_DIR=${HOST_PROJECT_DIR:-.}
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+volumes:
+  redis_data:
