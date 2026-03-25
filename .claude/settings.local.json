@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"from app.main import app; print\\(''main OK''\\)\")",
+      "Bash(python -c \"from app.services.cleanup import cleanup_old_files; print\\(''cleanup OK''\\)\")",
+      "Bash(python -c \"from app.middleware.rate_limit import rate_limit; print\\(''rate_limit OK''\\)\")",
+      "Bash(python -c \"from app.models.task import cleanup_stale_tasks, count_active_tasks; print\\(''task model OK''\\)\")",
+      "Bash(python:*)",
+      "Bash(py:*)"
+    ]
+  }
+}

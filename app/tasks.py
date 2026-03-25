@@ -1,8 +1,9 @@
 import logging
 import os
+from datetime import datetime, timezone
 
 from app import config
-from app.models.task import update_task_status
+from app.models.task import get_task, update_task_status
 from app.services.docker_runner import ConversionPayload, run_conversion
 
 logger = logging.getLogger(__name__)
@@ -16,6 +17,14 @@ def generate_audiobook(
     voice: str | None = None,
     speed: float = 1.0,
 ) -> dict:
+    task = get_task(task_id)
+    if task is not None:
+        created = datetime.fromisoformat(task.created_at)
+        age = (datetime.now(timezone.utc) - created).total_seconds()
+        if age > config.JOB_TIMEOUT:
+            update_task_status(task_id, "error", error="Превышен таймаут обработки")
+            raise Exception(f"Task {task_id} expired before starting (age={age:.0f}s)")
+
     logger.info("Task %s: starting conversion of %s (lang=%s)", task_id, filename, language)
     update_task_status(task_id, "processing")
 
