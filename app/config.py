@@ -21,6 +21,10 @@ SUPPORTED_LANGUAGES = {
     "en", "ru", "de", "fr", "es", "it", "pt", "pl", "tr", "nl", "zh", "ja", "ko", "hi",
 }
 
+ILOVEPDF_PUBLIC_KEY = os.getenv("ILOVEPDF_PUBLIC_KEY", "")
+ILOVEPDF_SECRET_KEY = os.getenv("ILOVEPDF_SECRET_KEY", "")
+PDF_CONVERT_TIMEOUT = int(os.getenv("PDF_CONVERT_TIMEOUT", "30"))
+
 MAX_CONCURRENT_TASKS = int(os.getenv("MAX_CONCURRENT_TASKS", "5"))
 RATE_LIMIT_GENERAL = int(os.getenv("RATE_LIMIT_GENERAL", "30"))
 RATE_LIMIT_TASKS = int(os.getenv("RATE_LIMIT_TASKS", "5"))

@@ -6,7 +6,8 @@
       "Bash(python -c \"from app.middleware.rate_limit import rate_limit; print\\(''rate_limit OK''\\)\")",
       "Bash(python -c \"from app.models.task import cleanup_stale_tasks, count_active_tasks; print\\(''task model OK''\\)\")",
       "Bash(python:*)",
-      "Bash(py:*)"
+      "Bash(py:*)",
+      "Bash(pip install:*)"
     ]
   }
 }

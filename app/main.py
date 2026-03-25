@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from app.middleware import log_requests
 from app.middleware.rate_limit import rate_limit
 from app.routes.download import router as download_router
+from app.routes.pdf import router as pdf_router
 from app.routes.tasks import router as tasks_router
 from app.routes.upload import router as upload_router
 
@@ -18,6 +19,7 @@ app.middleware("http")(log_requests)
 app.include_router(tasks_router, prefix="/api/v1")
 app.include_router(upload_router, prefix="/api/v1")
 app.include_router(download_router, prefix="/api/v1")
+app.include_router(pdf_router, prefix="/api/v1")
 
 
 @app.get("/health")
